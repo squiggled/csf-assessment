@@ -10,16 +10,23 @@ export class CartStore {
 
     cart: LineItem[] = []
     private cartSubject = new Subject<LineItem[]>();
-    cartObs$!: Observable<LineItem[]>;
+    cartObs$ = this.cartSubject.asObservable();
 
     private cartCountSub = new Subject<number>();
-    cartCountObs$!: Observable<number>;
+    cartCountObs$ =this.cartCountSub.asObservable();
+
+    isCartEmpty:boolean=true;
 
 
     addToCart(lineItem: LineItem) {
+        console.log("is cart empty? ", this.isCartEmpty);
         this.cart=[...this.cart, lineItem];
+        console.log(this.cart);
+        
         this.cartSubject.next(this.cart);
         console.log("cart length " + this.cart.length);
+        if (this.cart.length>0) this.isCartEmpty=false;
+        console.log("is cart empty? ", this.isCartEmpty);
         
         this.cartCountSub.next(this.cart.length); //pass item count to app.comp
     }

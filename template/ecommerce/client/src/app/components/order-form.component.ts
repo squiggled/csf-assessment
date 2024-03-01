@@ -36,13 +36,11 @@ export class OrderFormComponent implements OnInit {
       name: '',
       price: 0
     }
-    console.log("line item in order-form before assignment", lineItem);
-    
+    // console.log("line item in order-form before assignment", lineItem);
     this.form = this.createForm()
     lineItem.name=this.name;
     lineItem.price = this.price;
-
-    console.log("line item in order-form AFTER assignment", lineItem);
+    // console.log("line item in order-form AFTER assignment", lineItem);
     this.storeSvc.addToCart(lineItem);
     
   }

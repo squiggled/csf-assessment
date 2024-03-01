@@ -16,12 +16,17 @@ export class AppComponent implements OnInit {
   private storeSvc = inject(CartStore)
 
   itemCount!: number
+  isCartEmpty:boolean = true;
 
   ngOnInit(): void {
     this.storeSvc.cartCountObs$.subscribe(count=> {this.itemCount = count})
+    this.isCartEmpty=this.storeSvc.isCartEmpty;
   }
 
   checkout(): void {
+    if (this.storeSvc.isCartEmpty){
+      alert("Your cart is empty")
+    }
     this.router.navigate([ '/checkout' ])
   }
 }
