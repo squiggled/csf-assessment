@@ -28,6 +28,8 @@ export class CartStore {
         
         this.cartCountSub.next(this.cart.length); //pass item count to app.comp
     }
-
+    getCart(){
+        return this.cart;
+    }
 
 }

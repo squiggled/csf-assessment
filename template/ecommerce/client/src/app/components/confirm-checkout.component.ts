@@ -36,33 +36,12 @@ export class ConfirmCheckoutComponent implements OnInit{
       comments: this.fb.control<string>('')
     })
     
-    this.sub = this.storeSvc.cartObs$.subscribe(items => {
-      this.cartInCheckout = items
-      console.log("this.cart ", this.cartInCheckout);
-      //
-// 0
-// : 
-// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
-// 1
-// : 
-// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
-// 2
-// : 
-// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
-// 3
-// : 
-// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
-// 4
-// : 
-// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
-// length
-// : 
-// 5
-      
-      // JSON.stringify(this.cart, null, 2)
-      // console.log("this.cart in confirm checkout " + JSON.stringify(this.cart, null, 2));
-    });
-    
+    // this.sub = this.storeSvc.cartObs$.subscribe(items => {
+    //   this.cartInCheckout = items
+    //   console.log("this.cart ", this.cartInCheckout);
+ 
+    // });
+    this.cartInCheckout = this.storeSvc.getCart()
     
     // console.log("this.cart in confirm checkout outside sub " + JSON.stringify(this.cartInCheckout, null, 2))
     // console.log(this.cartObs$);
