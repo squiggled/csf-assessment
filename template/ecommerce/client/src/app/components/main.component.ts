@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import {Observable} from 'rxjs';
 import {ProductService} from '../product.service';
 import {Router} from '@angular/router';
+import { CartStore } from '../cart.store';
+import { LineItem } from '../models';
 
 @Component({
   selector: 'app-main',
@@ -13,6 +15,7 @@ export class MainComponent implements OnInit {
   // NOTE: you are free to modify this component
 
   private prodSvc = inject(ProductService)
+  private cartSvc = inject(CartStore)
   private router = inject(Router)
 
   categories$!: Observable<string[]>

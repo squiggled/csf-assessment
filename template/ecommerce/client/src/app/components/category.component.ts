@@ -17,6 +17,8 @@ export class CategoryComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute)
 
   category: string = "not set"
+  name!:string
+  price!:number
 
   products$!: Observable<Product[]>
 
