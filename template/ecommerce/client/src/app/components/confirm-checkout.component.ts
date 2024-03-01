@@ -19,7 +19,6 @@ export class ConfirmCheckoutComponent implements OnInit{
   // TODO Task 3
   itemCount!:number
   isCartEmpty!:boolean;
-  cartObs$!: Observable<LineItem[]>;
   cartInCheckout!: LineItem[];
   form!:FormGroup;
   sub! :Subscription;
@@ -36,16 +35,9 @@ export class ConfirmCheckoutComponent implements OnInit{
       comments: this.fb.control<string>('')
     })
     
-    // this.sub = this.storeSvc.cartObs$.subscribe(items => {
-    //   this.cartInCheckout = items
-    //   console.log("this.cart ", this.cartInCheckout);
- 
-    // });
     this.cartInCheckout = this.storeSvc.getCart()
     
-    // console.log("this.cart in confirm checkout outside sub " + JSON.stringify(this.cartInCheckout, null, 2))
-    // console.log(this.cartObs$);
-    
+  
 
   }
   checkout(){
@@ -54,26 +46,21 @@ export class ConfirmCheckoutComponent implements OnInit{
     if (this.form.valid){
       var cartSent!: Cart
       var orderSent!: Order;
-      this.storeSvc.cartObs$.subscribe(cartItems => {
-        cartSent = {lineItems: cartItems};
-        console.log(this.form.value);
-       
-      })
+      cartSent = {lineItems: this.cartInCheckout};
+      console.log(this.form.value);
       orderSent = {
         name:this.form.value.name,
         address:this.form.value.address,
         priority: this.form.value.priority,
         comments:this.form.value.comments,
-        cart: cartSent
+        cart:cartSent
       }
       // console.log("order sent ", orderSent);
       this.productSvc.checkout(orderSent);
     }
-    
-   
   }
 
   getTotal() {
-    this.total= this.cartInCheckout.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+   return this.total= this.cartInCheckout.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   }
 }
