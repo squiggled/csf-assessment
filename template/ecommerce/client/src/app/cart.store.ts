@@ -20,7 +20,7 @@ export class CartStore {
 
     addToCart(lineItem: LineItem) {
         this.cart=[...this.cart, lineItem];
-        console.log("cart in cart store" + JSON.stringify(this.cart));
+        // console.log("cart in cart store" + JSON.stringify(this.cart));
     
         this.cartSubject.next(this.cart);
         // console.log("cart length " + this.cart.length);

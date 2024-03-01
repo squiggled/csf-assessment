@@ -30,7 +30,7 @@ export class ProductService {
   // not be marked
   // TODO Task 3
   checkout(order: Order) {
-    console.log("order" , order);
+    // console.log("order" , order);
     firstValueFrom(this.http.post<any>(`api/order`, order))
     .then(result=> {
       alert("orderId: " + result.orderId);

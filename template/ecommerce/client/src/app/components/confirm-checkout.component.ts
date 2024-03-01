@@ -41,7 +41,7 @@ export class ConfirmCheckoutComponent implements OnInit{
 
   }
   checkout(){
-    console.log("form" , this.form.value);
+    // console.log("form" , this.form.value);
     
     if (this.form.valid){
       var cartSent!: Cart
