@@ -3,6 +3,7 @@ import { CartStore } from '../cart.store';
 import { LineItem } from '../models';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-confirm-checkout',
@@ -12,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ConfirmCheckoutComponent implements OnInit{
   
   private storeSvc = inject(CartStore)
+  private productSvc = inject(ProductService)
   constructor(private fb:FormBuilder){}
 
   // TODO Task 3
@@ -28,13 +30,13 @@ export class ConfirmCheckoutComponent implements OnInit{
       priority: this.fb.control<boolean>(false),
       comments: this.fb.control<string>('')
     })
-    
+
     this.cartObs$=this.storeSvc.cartObs$;
 
   }
   checkout(){
     console.log("got here " + this.form.valid);
-    
+    this.productSvc.checkout()
   }
 
 }
