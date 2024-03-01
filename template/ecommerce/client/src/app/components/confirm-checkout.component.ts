@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CartStore } from '../cart.store';
 import { LineItem } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
 
@@ -20,23 +20,61 @@ export class ConfirmCheckoutComponent implements OnInit{
   itemCount!:number
   isCartEmpty!:boolean;
   cartObs$!: Observable<LineItem[]>;
-
+  cartInCheckout!: LineItem[];
   form!:FormGroup;
+  sub! :Subscription;
+
+  total!:number
 
   ngOnInit(): void {
+    // this.cartObs$=this.storeSvc.cartObs$;
+
     this.form=this.fb.group({
       name: this.fb.control<string>('', Validators.required),
       address: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
       priority: this.fb.control<boolean>(false),
       comments: this.fb.control<string>('')
     })
-
-    this.cartObs$=this.storeSvc.cartObs$;
+    
+    this.sub = this.storeSvc.cartObs$.subscribe(items => {
+      this.cartInCheckout = items
+      console.log("this.cart ", this.cartInCheckout);
+      //
+// 0
+// : 
+// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
+// 1
+// : 
+// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
+// 2
+// : 
+// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
+// 3
+// : 
+// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
+// 4
+// : 
+// {prodId: '65e12d8f5ba8bdd8ab2c4449', quantity: 1, name: 'Cheese Slices - Made From Cow Milk 663 g Pouch + Cheese Spread - Classic 100 g', price: 675}
+// length
+// : 
+// 5
+      
+      // JSON.stringify(this.cart, null, 2)
+      // console.log("this.cart in confirm checkout " + JSON.stringify(this.cart, null, 2));
+    });
+    
+    
+    // console.log("this.cart in confirm checkout outside sub " + JSON.stringify(this.cartInCheckout, null, 2))
+    // console.log(this.cartObs$);
+    
 
   }
   checkout(){
     console.log("got here " + this.form.valid);
-    this.productSvc.checkout()
+    // this.productSvc.checkout()
   }
 
+  getTotal() {
+    this.total= this.cartInCheckout.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  }
 }

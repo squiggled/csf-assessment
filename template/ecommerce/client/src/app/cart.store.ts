@@ -19,14 +19,12 @@ export class CartStore {
 
 
     addToCart(lineItem: LineItem) {
-        console.log("is cart empty? ", this.isCartEmpty);
         this.cart=[...this.cart, lineItem];
-        console.log(this.cart);
-        
+        console.log("cart in cart store" + JSON.stringify(this.cart));
+    
         this.cartSubject.next(this.cart);
-        console.log("cart length " + this.cart.length);
+        // console.log("cart length " + this.cart.length);
         if (this.cart.length>0) this.isCartEmpty=false;
-        console.log("is cart empty? ", this.isCartEmpty);
         
         this.cartCountSub.next(this.cart.length); //pass item count to app.comp
     }
