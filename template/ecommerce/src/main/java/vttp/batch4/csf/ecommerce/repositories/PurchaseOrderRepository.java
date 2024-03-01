@@ -17,6 +17,10 @@ public class PurchaseOrderRepository {
   // not be marked
   // You may only add Exception to the method's signature
   public void create(Order order) {
-    // TODO Task 3
-  }
+    template.update(Queries.SQL_CREATE_ORDER, order.getOrderId(), order.getDate(), order.getName(), order.getAddress(), order.getPriority(), order.getComments(), order.getCart().toString());
+    
+      
+      
+    }
 }
+

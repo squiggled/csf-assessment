@@ -17,6 +17,6 @@ public class PurchaseOrderService {
   // not be marked
   // You may only add Exception to the method's signature
   public void createNewPurchaseOrder(Order order) {
-    // TODO Task 3
+    poRepo.create(order);
   }
 }

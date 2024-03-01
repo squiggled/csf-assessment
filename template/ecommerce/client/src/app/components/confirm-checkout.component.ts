@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CartStore } from '../cart.store';
-import { LineItem } from '../models';
+import { Cart, LineItem, Order } from '../models';
 import { Observable, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
@@ -70,8 +70,28 @@ export class ConfirmCheckoutComponent implements OnInit{
 
   }
   checkout(){
-    console.log("got here " + this.form.valid);
-    // this.productSvc.checkout()
+    console.log("form" , this.form.value);
+    
+    if (this.form.valid){
+      var cartSent!: Cart
+      var orderSent!: Order;
+      this.storeSvc.cartObs$.subscribe(cartItems => {
+        cartSent = {lineItems: cartItems};
+        console.log(this.form.value);
+       
+      })
+      orderSent = {
+        name:this.form.value.name,
+        address:this.form.value.address,
+        priority: this.form.value.priority,
+        comments:this.form.value.comments,
+        cart: cartSent
+      }
+      // console.log("order sent ", orderSent);
+      this.productSvc.checkout(orderSent);
+    }
+    
+   
   }
 
   getTotal() {
